@@ -14,5 +14,6 @@ namespace Domain.Abstract
         (string Message, bool Issuccess) Update(GivingTimeModel model);
         (string Message, bool Issuccess) Delete(int Id);
         List<GivingTimeModel> GetAll();
+        GivingTimeModel GetById(int id);
     }
 }

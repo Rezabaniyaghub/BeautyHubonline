@@ -15,5 +15,6 @@ namespace Domain.Abstract
         (string Message, bool Issuccess) Update(HairstylistModel model);
         (string Message, bool Issuccess) Delete(int Id);
         List<HairstylistModel> GetAll();
+        HairstylistModel GetById(int id);
     }
 }

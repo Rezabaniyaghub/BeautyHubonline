@@ -10,6 +10,8 @@ namespace DataAccess.Entity
     public class CustomerServiceEntity
     {
         public int Id { get; set; }
+        public string CustomerId { get; set; }
+        public string HairstylistId { get; set; }
         public string ShortnessOfHair { get; set; }
         public string HairShaping { get; set; }
         public string ShavingBeard { get; set; }

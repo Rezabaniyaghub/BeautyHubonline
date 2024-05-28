@@ -9,24 +9,33 @@ namespace DataAccess.Repositorys
 {
     public interface ICustomerServiceRepository
     {
-        (string Message, bool IssSuccess) Insert(CustomerServiceEntity model);
-        (string Message, bool IssSuccess) Update(CustomerServiceEntity model);
-        (string Message, bool IssSuccess) Delete(int Id);
+        (string Message, bool IsSuccess) Insert(CustomerServiceEntity model);
+        (string Message, bool IsSuccess) Update(CustomerServiceEntity model);
+        (string Message, bool IsSuccess) Delete(int Id);
+        CustomerServiceEntity GetById(int id);
         List<CustomerServiceEntity> GetAll();
     }
+
     public class CustomerServiceRepository : ICustomerServiceRepository
     {
         private readonly AppDbContext _appDbContext;
+
         public CustomerServiceRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
+
         public List<CustomerServiceEntity> GetAll()
         {
             return _appDbContext.CustomerServiceEntities.ToList();
         }
 
-        public (string Message, bool IssSuccess) Insert(CustomerServiceEntity model)
+        public CustomerServiceEntity GetById(int id)
+        {
+            return _appDbContext.CustomerServiceEntities.FirstOrDefault(x => x.Id == id);
+        }
+
+        public (string Message, bool IsSuccess) Insert(CustomerServiceEntity model)
         {
             try
             {
@@ -37,18 +46,18 @@ namespace DataAccess.Repositorys
             }
             catch (Exception ex)
             {
+                return ($"ثبت نام شما ناموفق بود. خطا: {ex.Message}", false);
             }
             return ("ثبت نام شما ناموفق بود.", false);
         }
 
-        public (string Message, bool IssSuccess) Update(CustomerServiceEntity model)
+        public (string Message, bool IsSuccess) Update(CustomerServiceEntity model)
         {
             try
             {
                 var old = _appDbContext.CustomerServiceEntities.FirstOrDefault(x => x.Id == model.Id);
                 if (old != null)
                 {
-                    old.Id = model.Id;
                     old.ShortnessOfHair = model.ShortnessOfHair;
                     old.CustomerEntity = model.CustomerEntity;
                     old.ShavingBeard = model.ShavingBeard;
@@ -57,15 +66,18 @@ namespace DataAccess.Repositorys
 
                     if (saveResult > 0)
                         return ("تغییرات شما با موفقیت انجام شد.", true);
+                    else
+                        return ("Entity Not Found!", false);
                 }
             }
             catch (Exception ex)
             {
+                return ($"تغییرات شما نا موفق بود. خطا: {ex.Message}", false);
             }
             return ("تغییرات شما نا موفق بود.", false);
         }
 
-        public (string Message, bool IssSuccess) Delete(int Id)
+        public (string Message, bool IsSuccess) Delete(int Id)
         {
             try
             {
@@ -76,14 +88,19 @@ namespace DataAccess.Repositorys
                     var saveResult = _appDbContext.SaveChanges();
 
                     if (saveResult > 0)
-                        return ("تغییرات شما با موفقیت انجام شد.", true);
+                        return ("حذف با موفقیت انجام شد.", true);
+                    else
+                        return ("Entity Not Found!", false);
                 }
             }
             catch (Exception ex)
             {
+                return ($"حذف شما نا موفق بود. خطا: {ex.Message}", false);
             }
-            return ("تغییرات شما نا موفق بود.", false);
+            return ("حذف شما نا موفق بود.", false);
         }
 
+       
     }
+
 }

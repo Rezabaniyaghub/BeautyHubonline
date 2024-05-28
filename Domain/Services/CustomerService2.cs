@@ -33,6 +33,20 @@ namespace Domain.Services
             }).ToList();
         }
 
+        public CustomerServiceModel GetById(int id)
+        {
+            var entity = _customerServiceRepository.GetById(id);
+            var modell = new CustomerServiceModel
+            {
+                Id = entity.Id,
+                ShortnessOfHair = entity.ShortnessOfHair,
+                HairShaping = entity.HairShaping,
+                ShavingBeard = entity.ShavingBeard,
+                GroomMakeUp = entity.GroomMakeUp
+            };
+            return modell;
+        }
+
         public (string Message, bool IsSuccess) Insert(CustomerServiceModel model)
         {
             var EntityList = new CustomerServiceEntity

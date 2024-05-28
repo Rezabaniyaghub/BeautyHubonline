@@ -15,6 +15,8 @@ namespace DataAccess.Entity
         public AppointmentStatus TurnStatus { get; set; }
         public decimal Price { get; set; }
 
+        public int CustomerId { get; set; }
+
         public virtual CustomerEntity CustomerEntity { get; set; }
 
 

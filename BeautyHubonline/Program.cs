@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using MongoDB.Driver.Core.Configuration;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
-internal class Program
+public class Program
 {
     private static void Main(string[] args)
     {
@@ -14,10 +14,18 @@ internal class Program
 
         builder.Services.AddTransient<IApponintmentRepository, AppointmentRepository>();
         builder.Services.AddTransient<IAppointmentService, AppointmentService>();
+
         builder.Services.AddTransient<ICustomerRepository, CustomerRepository>();
         builder.Services.AddTransient<ICustomerServicee, CustomerService>();
+
         builder.Services.AddTransient<ICustomerServiceRepository, CustomerServiceRepository>();
         builder.Services.AddTransient<ICustomerSevice2, CustomerService2>();
+
+        builder.Services.AddTransient<IGivingTimeRepository, GivingTimeRepository>();
+        builder.Services.AddTransient<IGivingTimeService, GivingTimeServise>();
+
+        builder.Services.AddTransient<IHirstylRepository, HairstylistRepository>();
+        builder.Services.AddTransient<IHirstylService, HirstylService>();
 
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 

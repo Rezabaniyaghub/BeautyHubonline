@@ -26,7 +26,6 @@ namespace DataAccess.Entity
 
         public CustomerEntity()
         {
-
         }
     }
 

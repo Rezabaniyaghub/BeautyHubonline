@@ -33,6 +33,20 @@ namespace Domain.Services
             }).ToList();
         }
 
+        public CustomerModel GetById(int id)
+        {
+            var entity = _customerRepository.GetById(id);
+            var modell = new CustomerModel
+            {
+                CustomerId = entity.CustomerId,
+                FullName = entity.FullName,
+                Email = entity.Email,
+                PhoneNumber = entity.PhoneNumber,
+                BookedAppointment = entity.BookedAppointment
+            };
+            return modell;
+        }
+
         public (string Message, bool Issuccess) Insert(CustomerModel model)
         {
             var Entity = new CustomerEntity

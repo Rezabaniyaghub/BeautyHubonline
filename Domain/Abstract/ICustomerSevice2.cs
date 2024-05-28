@@ -1,4 +1,5 @@
-﻿using Models;
+﻿using DataAccess.Entity;
+using Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Domain.Abstract
         (string Message, bool IsSuccess) Insert(CustomerServiceModel model);
         (string Message, bool IsSuccess) Update(CustomerServiceModel model);
         (string Message, bool IsSuccess) Delete(int Id);
+        CustomerServiceModel GetById(int id);
         List<CustomerServiceModel> GetAll();
     }
 }

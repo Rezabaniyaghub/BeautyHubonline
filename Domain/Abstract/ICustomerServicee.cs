@@ -14,5 +14,6 @@ namespace Domain.Abstract
         (string Message, bool Issuccess) Update(CustomerModel model);
         (string Message, bool Issuccess) Delete(int Id);
         List<CustomerModel> GetAll();
+        CustomerModel GetById(int id);
     }
 }

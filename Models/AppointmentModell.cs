@@ -19,5 +19,7 @@ namespace Models
 
         [Display(Name = "قیمت")]
         public decimal Price { get; set; }
+
+        public int CustomerId { get; set; }
     }
 }

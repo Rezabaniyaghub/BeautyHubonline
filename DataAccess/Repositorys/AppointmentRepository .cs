@@ -12,6 +12,7 @@ namespace DataAccess.Repositorys
         (string Message, bool IsSuccess) Insert(AppointmentEntity model);
         (string Message, bool IsSuccess) Update(AppointmentEntity model);
         (string Message, bool IsSuccess) Delete(int Id);
+        AppointmentEntity GetById(int id);
         List<AppointmentEntity> GetAll();
 
     }
@@ -37,12 +38,18 @@ namespace DataAccess.Repositorys
                 _appDbContext.Appointments.Add(model);
                 var saveResult = _appDbContext.SaveChanges();
                 if (saveResult > 0)
-                    return ("Success done!", true);
+                    return ("ثبت با موفقیت انجام شد.", true);
             }
             catch (Exception ex)
             {
+                return ($"ثبت ناموفق بود. خطا: {ex.Message}", false);
             }
-            return ("Faild!", false);
+            return ("ثبت ناموفق بود.", false);
+        }
+
+        public AppointmentEntity GetById(int id)
+        {
+            return _appDbContext.Appointments.FirstOrDefault(x => x.Id == id);
         }
 
         public (string Message, bool IsSuccess) Update(AppointmentEntity model)
@@ -52,25 +59,23 @@ namespace DataAccess.Repositorys
                 var old = _appDbContext.Appointments.FirstOrDefault(x => x.Id == model.Id);
                 if (old != null)
                 {
-                    old.Id = model.Id;
+                    old.CustomerId = model.CustomerId;
                     old.ServiceType = model.ServiceType;
                     old.DateAndTimeOfAppointment = model.DateAndTimeOfAppointment;
                     old.TurnStatus = model.TurnStatus;
                     old.Price = model.Price;
                     var saveResult = _appDbContext.SaveChanges();
                     if (saveResult > 0)
-                        return ("Success done!", true);
+                        return ("ویرایش با موفقیت انجام شد.", true);
+                    else
+                        return ("موجودیت یافت نشد!", false);
                 }
-                else
-                {
-                    return ("Entity Not Found!", false);
-                }
-
             }
             catch (Exception ex)
             {
+                return ($"ویرایش ناموفق بود. خطا: {ex.Message}", false);
             }
-            return ("Faild!", false);
+            return ("ویرایش ناموفق بود.", false);
         }
 
         public (string Message, bool IsSuccess) Delete(int Id)
@@ -83,19 +88,17 @@ namespace DataAccess.Repositorys
                     _appDbContext.Appointments.Remove(old);
                     var saveResult = _appDbContext.SaveChanges();
                     if (saveResult > 0)
-                        return ("Success done!", true);
+                        return ("حذف با موفقیت انجام شد.", true);
+                    else
+                        return ("موجودیت یافت نشد!", false);
                 }
-                else
-                {
-                    return ("Entity Not Found!", false);
-                }
-
             }
             catch (Exception ex)
             {
+                return ($"حذف ناموفق بود. خطا: {ex.Message}", false);
             }
-            return ("Faild!", false);
+            return ("حذف ناموفق بود.", false);
         }
-
     }
+
 }

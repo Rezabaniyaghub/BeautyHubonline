@@ -24,6 +24,7 @@ namespace Domain.Services
             return entityList.Select(x => new AppointmentModell
             {
                 Id = x.Id,
+                CustomerId = x.CustomerId,
                 ServiceType = x.ServiceType,
                 DateAndTimeOfAppointment = x.DateAndTimeOfAppointment,
                 Price = x.Price
@@ -42,6 +43,20 @@ namespace Domain.Services
             return result;
         }
 
+        public AppointmentModell GetById(int id)
+        {
+            var entity= _apponintmentRepository.GetById(id);
+            var model = new AppointmentModell
+            {
+                Id = entity.Id,
+                CustomerId = entity.CustomerId,
+                ServiceType = entity.ServiceType,
+                DateAndTimeOfAppointment = entity.DateAndTimeOfAppointment,
+                Price = entity.Price
+            };
+            return model; 
+        }
+
         public (string Message, bool IsSuccess) Update(AppointmentModell model)
         {
             if (model.Id <= 0)
@@ -50,16 +65,18 @@ namespace Domain.Services
             {
 
                 Id = model.Id,
+                CustomerId = model.CustomerId,
                 ServiceType = model.ServiceType,
                 DateAndTimeOfAppointment = model.DateAndTimeOfAppointment,
                 Price = model.Price
             };
-            var result = _apponintmentRepository.Insert(enitity);
+            var result = _apponintmentRepository.Update(enitity);
             return result;
         }
 
         public (string Message, bool IsSuccess) Delete(int Id) =>
             _apponintmentRepository.Delete(Id);
 
+       
     }
 }

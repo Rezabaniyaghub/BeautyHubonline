@@ -13,18 +13,25 @@ namespace DataAccess.Repositorys
         (string Message, bool IsSuccess) Update(HairstylistEntity model);
         (string Message, bool IsSuccess) Delete(int Id);
         List<HairstylistEntity> GetAll();
+        HairstylistEntity GetById(int id);
     }
 
-    public class HirstylRepository : IHirstylRepository
+    public class HairstylistRepository : IHirstylRepository
     {
         private readonly AppDbContext _appDbContext;
-        public HirstylRepository(AppDbContext appDbContext)
+        public HairstylistRepository(AppDbContext appDbContext)
         {
             _appDbContext = appDbContext;
         }
+
         public List<HairstylistEntity> GetAll()
         {
             return _appDbContext.HairstylistEntities.ToList();
+        }
+
+        public HairstylistEntity GetById(int id)
+        {
+            return _appDbContext.HairstylistEntities.FirstOrDefault(x=>x.Id==id);
         }
 
         public (string Message, bool IsSuccess) Insert(HairstylistEntity model)
@@ -34,12 +41,12 @@ namespace DataAccess.Repositorys
                 _appDbContext.HairstylistEntities.Add(model);
                 var saveResult = _appDbContext.SaveChanges();
                 if (saveResult > 0)
-                    return ("Succes Don!", true);
+                    return ("موفقیت‌آمیز بود!", true);
             }
             catch (Exception ex)
             {
             }
-            return ("Faild!", false);
+            return ("خطا رخ داده است!", false);
         }
 
         public (string Message, bool IsSuccess) Update(HairstylistEntity model)
@@ -56,15 +63,15 @@ namespace DataAccess.Repositorys
                     old.PhoneNumber = model.PhoneNumber;
                     var saveResult = _appDbContext.SaveChanges();
                     if (saveResult > 0)
-                        return ("Succes Don!", true);
+                        return ("موفقیت‌آمیز بود!", true);
                     else
-                        return ("Entity Not Found!", false);
+                        return ("موجودیت یافت نشد!", false);
                 }
             }
             catch (Exception ex)
             {
             }
-            return ("Faild!", false);
+            return ("خطا رخ داده است!", false);
         }
 
         public (string Message, bool IsSuccess) Delete(int Id)
@@ -77,16 +84,19 @@ namespace DataAccess.Repositorys
                     _appDbContext.HairstylistEntities.Remove(old);
                     var saveResult = _appDbContext.SaveChanges();
                     if (saveResult > 0)
-                        return ("Succes Don!", true);
+                        return ("موفقیت‌آمیز بود!", true);
                     else
-                        return ("Entity Not Found!", false);
+                        return ("موجودیت یافت نشد!", false);
                 }
             }
             catch (Exception ex)
             {
             }
-            return ("Faild!", false);
+            return ("خطا رخ داده است!", false);
         }
 
     }
+
+
 }
+

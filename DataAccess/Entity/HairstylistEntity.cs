@@ -15,6 +15,7 @@ namespace DataAccess.Entity
         public string HallName { get; set; }
         public string Address { get; set; }
         public string PhoneNumber { get; set; }
+        public string ImageName { get; set; }
 
 
         public List<CustomerServiceEntity> CustomerServiceEntitiy { get; set; }

@@ -10,9 +10,10 @@ namespace DataAccess.Entity
               //زمان دادن به مشتری
     public class GivingTimeEntity
     {
-        public int GivingTimeId { get; set; }
-
+        public int GivingTimeId { get; set; }   
+        public int HairstylistId { get; set; } 
         public int CustomerId { get; set; }
+
 
         public virtual CustomerEntity Customer { get; set; }
         public virtual HairstylistEntity HairstylistEntity { get; set; }
